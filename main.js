@@ -26,9 +26,11 @@ function attemptConnection(ip, port, cb) {
 	xhr.onerror = function(e) {
 		var img = document.createElement('img');
 		img.onload = function() {
-		   console.log(ip + ' success');
+		   cb(ip, 200);
 		}
-        img.setAttribute('src', 'http://'+ip+':'+port);		
+        img.setAttribute('src', 'http://'+ip+':'+port+'/ping');
+		img.width = '0';
+		img.height = '0';
 		document.body.appendChild(img);
 	}
 	xhr.ontimeout = function () {
