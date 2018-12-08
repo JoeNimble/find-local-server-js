@@ -25,7 +25,7 @@ function attemptConnection(ip, port, cb) {
 	try {
 		xhr.send();
 	} catch (e) {
-		console.log(e);
+		cb(ip, 200);
 	}
 }
 
