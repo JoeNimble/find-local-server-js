@@ -22,7 +22,11 @@ function attemptConnection(ip, port, cb) {
 		cb(ip, xhr.status);
 	};
 	xhr.open("GET", "http://"+ip+":"+port);
-	xhr.send();
+	try {
+		xhr.send();
+	} catch (e) {
+		console.log(e);
+	}
 }
 
 function findServers(myIp, port, cb) {
