@@ -2,7 +2,7 @@
 function getLocalIp(cb) {
 	window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
 	var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
-	pc.createDataChannel("");    //create a bogus data channel
+	pc.createDataChannel('');    //create a bogus data channel
 	pc.createOffer(pc.setLocalDescription.bind(pc), noop);    // create offer and set local description
 	pc.onicecandidate = function(ice){  //listen for candidate events
 		if(!ice || !ice.candidate || !ice.candidate.candidate) {
@@ -18,14 +18,24 @@ function getLocalIp(cb) {
 
 function attemptConnection(ip, port, cb) {
 	var xhr = new XMLHttpRequest();
+	xhr.timeout = 2000;
 	xhr.onload = function() {
 		console.log(ip, xhr.status);
-		
 		cb(ip, xhr.status);
 	};
-	xhr.open("GET", "http://"+ip+":"+port);
+	xhr.onerror = function(e) {
+		var img = document.createElement('img');
+		img.onload = function() {
+		   console.log(ip + ' success');
+		}
+        img.setAttribute('src', 'http://'+ip+':'+port);		
+		document.body.appendChild(img);
+	}
+	xhr.ontimeout = function () {
+		console.log(ip, 'timeout');
+	}
+	xhr.open('GET', 'http://'+ip+':'+port);
 	xhr.send();
-	console.log(xhr.responseText);
 }
 
 function findServers(myIp, port, cb) {
