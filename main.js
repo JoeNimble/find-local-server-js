@@ -25,7 +25,7 @@ function attemptConnection(ip, port, cb) {
 	};
 	xhr.open("GET", "http://"+ip+":"+port);
 	xhr.send();
-	console.log(JSON.parse(xhr.responseText));
+	console.log(xhr.responseText);
 }
 
 function findServers(myIp, port, cb) {
