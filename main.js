@@ -34,7 +34,7 @@ function attemptConnection(ip, port, cb) {
 	xhr.ontimeout = function () {
 		console.log(ip, 'timeout');
 	}
-	xhr.open('GET', 'http://'+ip+':'+port);
+	xhr.open('GET', 'https://'+ip+':'+port);
 	xhr.send();
 }
 
