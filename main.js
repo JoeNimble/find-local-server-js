@@ -19,21 +19,20 @@ function getLocalIp(cb) {
 function attemptConnection(ip, port, cb) {
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function() {
+		console.log(ip, xhr.status);
+		console.log(JSON.parse(xhr.responseText));
 		cb(ip, xhr.status);
 	};
 	xhr.open("GET", "http://"+ip+":"+port);
-	try {
-		xhr.send();
-	} catch (e) {
-		cb(ip, 200);
-	}
+	xhr.send();
+	
 }
 
 function findServers(myIp, port, cb) {
 	const split = myIp.split('.');
 	const block = split[0];
 	var clone = split.slice();
-	for (var i = 0; i <= 255; i++) {
+	for (var i = 0; i < 255; i++) {
 		clone[3] = i;
 		var testIp = clone.join('.');
 		
