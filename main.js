@@ -20,12 +20,12 @@ function attemptConnection(ip, port, cb) {
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function() {
 		console.log(ip, xhr.status);
-		console.log(JSON.parse(xhr.responseText));
+		
 		cb(ip, xhr.status);
 	};
 	xhr.open("GET", "http://"+ip+":"+port);
 	xhr.send();
-	
+	console.log(JSON.parse(xhr.responseText));
 }
 
 function findServers(myIp, port, cb) {
